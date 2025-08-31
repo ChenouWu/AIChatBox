@@ -23,8 +23,7 @@ export default function Login() {
       );
       navigate("/");
     } catch (e) {
-      // 细化错误信息（可选）
-      if (e?.message) toast.error(e.message);
+      console.error(error);
     }
   };
 
@@ -57,15 +56,7 @@ export default function Login() {
             </p>
           </div>
 
-         
-          {error && (
-            <div className="px-6">
-              <div className="mb-3 rounded-lg border border-red-200 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300 px-3 py-2 text-sm">
-                {error}
-              </div>
-            </div>
-          )}
-
+        
           {/* Form */}
           <form onSubmit={onSubmit} className="px-6 pb-6 space-y-4">
             <div className="space-y-1.5">

@@ -42,8 +42,10 @@ const userSchema = new mongoose.Schema(
     nextResetAt: { 
         type: Date 
     }, 
-    
-},
+    conversations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Conversation", index: true }],
+    lastChatAt: { type: Date },
+    chatCount: { type: Number, default: 0 },
+  },
   { timestamps: true }
 );
 

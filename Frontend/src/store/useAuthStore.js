@@ -6,6 +6,7 @@ const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 export const useAuthStore = create((set, get) => ({
   user: null,
   loading: false,
+  initialized: false,
   error: null,
 
   // Fetching current user
@@ -21,7 +22,7 @@ export const useAuthStore = create((set, get) => ({
   } catch (e) {
     set({ user: null, error: "Log In First" });
   } finally {
-    set({ loading: false });
+    set({ loading: false, initialized: true });// 标记初始化完成
   }
 },
 

@@ -21,15 +21,17 @@ const Signup = async (req, res) => {
             credits: process.env.FREE_CREDITS,
         });
         
-        res.cookie(COOKIE_NAME, sign(user), {
+        res.cookie(process.env.COOKIE_NAME, sign(user), {
             httpOnly: true,
-            secure: false,   // 本地必须 false
-            sameSite: "lax", // 或者 "none" + secure: true (但本地 http 不行)
+            secure: false,  
+            sameSite: "lax", 
             path: "/",
-});
-
+          });
         res.json(user);
     }catch(err){
+       if (err?.code === 11000 && err?.keyPattern?.email) {
+        return res.status(409).json({ error: "This email is already registered. Try logging in instead." });
+    }
         return res.status(500).json({error: err.message});
     }
 
@@ -91,8 +93,8 @@ const SignInEmail = async (req, res) => {
 
          res.cookie(process.env.COOKIE_NAME, sign(user), {
             httpOnly: true,
-            secure: false,   // 本地必须 false
-            sameSite: "lax", // 或者 "none" + secure: true (但本地 http 不行)
+            secure: false,   
+            sameSite: "lax", 
             path: "/",
 });
       return res.json(user);

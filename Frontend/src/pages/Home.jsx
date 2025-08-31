@@ -9,7 +9,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const { user, fetchMe, loading } = useAuthStore()
+  const { user, fetchMe, loading,initialized } = useAuthStore()
+  const {hasConversations,fetchChats} = useChatStore()
   const sendMessageToAI = useChatStore((state) => state.sendMessageToAI)
 
   
@@ -20,10 +21,17 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate("/login")
+    if (initialized && !loading && user) {
+      
+      (async () => {
+        await fetchChats();
+        if (hasConversations()) {
+          
+          navigate("/chat");
+        }
+      })();
     }
-  }, [user, loading, navigate])
+  }, [initialized,user, loading, fetchChats, hasConversations, navigate]);
 
   const handleSend = async (e) => {
     e.preventDefault()
