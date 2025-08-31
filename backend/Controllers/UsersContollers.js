@@ -119,7 +119,7 @@ const logout = async (_req, res) => {
 
 const me = async (req, res) => {
   try {
-    const token = req.cookies[process.env.COOKIE_NAME];
+    const token = req.cookie[process.env.COOKIE_NAME];
     if (!token) {
       return res.status(401).json({ error: "Not authenticated" });
     }
