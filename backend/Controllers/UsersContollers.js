@@ -2,7 +2,7 @@ import User from '../Schemas/Users.js';
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
 import bcrypt from "bcryptjs";
-;
+
 const sign = (u) =>jwt.sign({ uid: u._id.toString(), email: u.email }, process.env.JWT_SECRET, { expiresIn: "7d" })
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -23,8 +23,8 @@ const Signup = async (req, res) => {
         
         res.cookie(process.env.COOKIE_NAME, sign(user), {
             httpOnly: true,
-            secure: false,  
-            sameSite: "lax", 
+            secure: true,  
+            sameSite: "none", 
             path: "/",
           });
         res.json(user);
@@ -44,7 +44,6 @@ const SignInGoogle = async (req, res) => {
       return res.status(400).json({ error: "Missing idToken" });
     }
 
- 
     const ticket = await googleClient.verifyIdToken({
       idToken,
       audience: process.env.GOOGLE_CLIENT_ID,
@@ -65,11 +64,10 @@ const SignInGoogle = async (req, res) => {
         credits: process.env.FREE_CREDITS || 50000,
       });
     }
-
          res.cookie(process.env.COOKIE_NAME, sign(user), {
             httpOnly: true,
-            secure: false,  
-            sameSite: "lax", 
+            secure: true,  
+            sameSite: "none", 
             path: "/",
 });
     res.json(user);
@@ -93,8 +91,8 @@ const SignInEmail = async (req, res) => {
 
          res.cookie(process.env.COOKIE_NAME, sign(user), {
             httpOnly: true,
-            secure: false,   
-            sameSite: "lax", 
+            secure: true,   
+            sameSite: "none", 
             path: "/",
 });
       return res.json(user);
@@ -109,8 +107,9 @@ const logout = async (_req, res) => {
   try {
     res.clearCookie(process.env.COOKIE_NAME || "session", {
       httpOnly: true,
-      secure: false,  // 本地必须 false
-      sameSite: "lax",
+      secure: true,  
+      sameSite: "none",
+      path: "/",
     });
     return res.json({ ok: true });
   } catch (err) {
@@ -125,9 +124,8 @@ const me = async (req, res) => {
       return res.status(401).json({ error: "Not authenticated" });
     }
 
-    // 验证 JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.uid).select("-password"); // 不返回密码
+    const user = await User.findById(decoded.uid).select("-password"); 
     if (!user) {
       return res.status(401).json({ error: "User not found" });
     }

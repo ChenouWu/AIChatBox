@@ -1,7 +1,7 @@
 // src/store/authStore.js
 import { create } from "zustand";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://aichatbox-93ux.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   user: null,
@@ -16,6 +16,7 @@ export const useAuthStore = create((set, get) => ({
     const res = await fetch(`${API_BASE}/api/auth/me`, {
       credentials: "include",  
     });
+    console.log(res);
     if (!res.ok) throw new Error("Not authenticated");
     const data = await res.json();
     set({ user: data || null });
@@ -105,6 +106,7 @@ export const useAuthStore = create((set, get) => ({
             set({ error: "Logout failed" });
         }
 },
+
 
 
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const API = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+const API = import.meta.env.VITE_API_BASE || "https://aichatbox-93ux.onrender.com";
 
 async function fetchJson(url, options = {}) {
   const res = await fetch(url, options);
