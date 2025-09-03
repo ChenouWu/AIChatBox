@@ -18,7 +18,11 @@ export const useAuthStore = create((set, get) => ({
       credentials: "include",  
     });
       
-    
+    if (res.status === 401) {
+        set({ user: null });
+        window.location.href = "/login";
+        return;
+      }
 
     if (!res.ok) throw new Error("Not authenticated");
     const data = await res.json();
