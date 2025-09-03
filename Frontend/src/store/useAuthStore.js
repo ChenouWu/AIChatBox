@@ -20,7 +20,7 @@ export const useAuthStore = create((set, get) => ({
       
     if (res.status === 401) {
         set({ user: null });
-        window.location.href = "/login";
+        window.location.href = "/Login";
         return;
       }
 
