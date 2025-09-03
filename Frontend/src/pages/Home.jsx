@@ -13,23 +13,21 @@ export default function Home() {
   const {hasConversations,fetchChats} = useChatStore()
   const sendMessageToAI = useChatStore((state) => state.sendMessageToAI)
 
-  
   useEffect(() => {
     fetchMe()
+  
     console.log("Fetched user:", user)
   }, [fetchMe])
-
-
+  
   useEffect(() => {
-    if (initialized && !loading && user) {
-      
+    if (initialized && !loading && !user) {
       (async () => {
         await fetchChats();
         if (hasConversations()) {
-          
           navigate("/chat");
         }
-      })();
+      })
+       // Go to Chat page;
     }
   }, [initialized,user, loading, fetchChats, hasConversations, navigate]);
 
@@ -38,7 +36,7 @@ export default function Home() {
     if (!message.trim() || isLoading) return
 
     setIsLoading(true)
-    await sendMessageToAI(message) // Save in store + call API
+    await sendMessageToAI(message) 
     setMessage("")
     setIsLoading(false)
     navigate("/chat") // Go to Chat page

@@ -1,5 +1,6 @@
 // src/store/authStore.js
 import { create } from "zustand";
+import toast  from 'react-hot-toast'
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://aichatbox-93ux.onrender.com";
 
@@ -16,14 +17,16 @@ export const useAuthStore = create((set, get) => ({
     const res = await fetch(`${API_BASE}/api/auth/me`, {
       credentials: "include",  
     });
-    console.log(res);
+      
+    
+
     if (!res.ok) throw new Error("Not authenticated");
     const data = await res.json();
     set({ user: data || null });
   } catch (e) {
     set({ user: null, error: "Log In First" });
   } finally {
-    set({ loading: false, initialized: true });// 标记初始化完成
+    set({ loading: false, initialized: true });// 
   }
 },
 

@@ -1,6 +1,6 @@
 import Conversation from "../Schemas/Chat.js";
 
-/** GET /api/chats  列表：我的会话（侧边栏） */
+/** GET /api/chats  */
 export async function listChats(req, res) {
   const userId = req.auth.uid;
   const chats = await Conversation.find({ userId })
@@ -9,7 +9,7 @@ export async function listChats(req, res) {
   res.json(chats);
 }
 
-/** GET /api/chats/:id  获取会话详情（含messages） */
+/** GET /api/chats/:id */
 export async function getChat(req, res) {
   const userId = req.auth.uid;
   const { id } = req.params;
@@ -18,7 +18,7 @@ export async function getChat(req, res) {
   res.json(chat);
 }
 
-/** POST /api/chats  新建会话 */
+/** POST /api/chats   */
 export async function createChat(req, res) {
   const userId = req.auth.uid;
   const { title } = req.body || {};
@@ -31,7 +31,7 @@ export async function createChat(req, res) {
   res.json(chat);
 }
 
-/** POST /api/chats/:id/messages  追加一条消息 */
+/** POST /api/chats/:id/messages   */
 export async function addMessage(req, res) {
   const userId = req.auth.uid;
   const { id } = req.params;
@@ -44,14 +44,12 @@ export async function addMessage(req, res) {
     {
       $push: { messages: { sender, text } },
       $set: { lastMessageAt: new Date() },
-      // 如果是首条或你想用最近一条做标题（可按需保留）
-      // $setOnInsert 只在新建时设置，这里简单处理为：当标题为空时用文本前40字符
     },
     { new: true }
   );
   if (!chat) return res.status(404).json({ error: "Not found" });
 
-  // 若标题为空，用第一条用户消息生成
+ 
   if (!chat.title || chat.title === "New chat") {
     const firstUserMsg = chat.messages.find((m) => m.sender === "user");
     if (firstUserMsg) {
@@ -63,7 +61,7 @@ export async function addMessage(req, res) {
   res.json(chat);
 }
 
-/** PATCH /api/chats/:id  重命名会话 */
+/** PATCH /api/chats/:id   */
 export async function renameChat(req, res) {
   const userId = req.auth.uid;
   const { id } = req.params;
@@ -77,7 +75,7 @@ export async function renameChat(req, res) {
   res.json(chat);
 }
 
-/** DELETE /api/chats/:id  删除会话 */
+/** DELETE /api/chats/:id   */
 export async function deleteChat(req, res) {
   const userId = req.auth.uid;
   const { id } = req.params;

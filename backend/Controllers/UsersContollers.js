@@ -10,7 +10,7 @@ const sign = (u) =>
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// ✅ 统一 cookie 名称（有默认值）
+
 const COOKIE_NAME = process.env.COOKIE_NAME || "app_session";
 const isProd = process.env.NODE_ENV === "production";
 const cookieOpts = {
@@ -36,7 +36,6 @@ export const Signup = async (req, res) => {
       credits: process.env.FREE_CREDITS,
     });
 
-    // ✅ 设置 cookie: 用 COOKIE_NAME + 统一选项
     res.cookie(COOKIE_NAME, sign(user), cookieOpts);
     return res.json(user);
   } catch (err) {

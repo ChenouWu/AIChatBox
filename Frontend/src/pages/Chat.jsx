@@ -35,13 +35,11 @@ export default function Chat() {
     if (!text) return
     await sendMessageToAI(text)
     setMessage("")
-    // 重置 textarea 高度
     if (taRef.current) {
       taRef.current.style.height = "auto"
     }
   }
 
-  // textarea 自动增高
   const taRef = useRef(null)
   const handleInput = (e) => {
     setMessage(e.target.value)

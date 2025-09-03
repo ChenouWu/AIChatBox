@@ -15,8 +15,8 @@ app.set("trust proxy", 1);
 
 
 const ALLOWED_ORIGINS = [
-  "http://localhost:5173",
-  "https://aichatbox-93ux.onrender.com",
+    "https://aichatbox-1-5a46.onrender.com", // frontend address
+  "https://aichatbox-93ux.onrender.com", // backend address
 ];
 
 // 放最前面：兜底 CORS 头（即使 401/500 也有 CORS 响应头）

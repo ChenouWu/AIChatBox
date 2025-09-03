@@ -41,7 +41,7 @@ export default function SignUp() {
             </p>
           </div>
 
-          {/* Error */}
+        
           {error && (
             <div className="px-6">
               <div className="mb-3 rounded-lg border border-red-200 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300 px-3 py-2 text-sm">
@@ -50,7 +50,7 @@ export default function SignUp() {
             </div>
           )}
 
-          {/* Form */}
+          
           <form onSubmit={onSubmit} className="px-6 pb-6 space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>

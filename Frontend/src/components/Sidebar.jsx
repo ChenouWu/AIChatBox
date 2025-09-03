@@ -5,11 +5,11 @@ export default function Sidebar() {
   const {
     chats,              
     currentChatId,
-    fetchChats,         // ← 拉列表
-    openChat,           // ← 打开会话
-    newChat,            // ← 新建会话
-    deleteChat,         // ← 删除会话（可选）
-    renameChat,         // ← 重命名（可选）
+    fetchChats,         
+    openChat,           
+    newChat,              
+    deleteChat,         
+    renameChat,        
     loading,
     error,
   } = useChatStore();
@@ -19,7 +19,6 @@ export default function Sidebar() {
   
   useEffect(() => {
     fetchChats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNew = async () => {
@@ -42,7 +41,7 @@ export default function Sidebar() {
         collapsed ? "w-16" : "w-64"
       }`}
     >
-      {/* 顶部 */}
+    
       <div className="flex items-center justify-between mb-3">
         {!collapsed && <h2 className="text-lg font-bold">Chats</h2>}
         <div className="flex items-center gap-2">
@@ -64,12 +63,10 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* 错误/加载 */}
       {!collapsed && error && (
         <div className="mb-2 text-xs text-red-500">{error}</div>
       )}
 
-      {/* 列表 */}
       <div className="flex-1 overflow-y-auto space-y-1">
         {loading && (
           <div className={`text-sm text-gray-500 ${collapsed ? "text-center" : ""}`}>
@@ -103,7 +100,6 @@ export default function Sidebar() {
                 <>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm truncate">{title}</div>
-                    {/* <div className="text-[11px] text-gray-500">{new Date(c.lastMessageAt).toLocaleString()}</div> */}
                   </div>
                   <div className="opacity-0 group-hover:opacity-100 transition flex items-center gap-1">
                     <button

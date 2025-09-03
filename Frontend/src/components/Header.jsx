@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 export default function Header() {
   const navigate = useNavigate();
-  const { user, loading, logout, error } = useAuthStore();
+  const { user, loading, logout } = useAuthStore();
 
   const displayName = useMemo(() => {
     if (!user) return "";
