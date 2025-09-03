@@ -1,6 +1,5 @@
 // src/store/authStore.js
 import { create } from "zustand";
-import toast  from 'react-hot-toast'
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://aichatbox-93ux.onrender.com";
 
@@ -20,7 +19,7 @@ export const useAuthStore = create((set, get) => ({
       
     if (res.status === 401) {
         set({ user: null });
-        window.location.href = "/Login";
+        window.location.href = "/login";
         return;
       }
 
